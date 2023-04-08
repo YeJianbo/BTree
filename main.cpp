@@ -3,7 +3,7 @@
 using namespace std;
 
 //
-const int MAX_CHILDREN = 4;
+const int MAX_CHILDREN = 3;
 const int MIN_CHILDREN = 2;
 
 // B树节点
@@ -55,19 +55,22 @@ public:
     //打印节点
     void printNode(Node *node);
 };
-
 void BTree::printNode(Node *node) {
-    if (node == nullptr) {
-        return;
+    cout << "[ ";
+    for (int i = 0; i < node->keys.size(); i++) {
+        cout << node->keys[i] << " ";
     }
-    for (int i = 0; i < node->keys.size(); ++i) {
-        if (!node->isLeaf) {
-            printNode(node->children[i]);
-        }
-        std::cout << node->keys[i] << " ";
-    }
+    cout << "]";
+
     if (!node->isLeaf) {
-        printNode(node->children[node->children.size() - 1]);
+        cout << " {";
+        for (int i = 0; i < node->children.size(); i++) {
+            printNode(node->children[i]);
+            if (i < node->children.size() - 1) {
+                cout << ", ";
+            }
+        }
+        cout << "}";
     }
 }
 
@@ -232,8 +235,8 @@ int main() {
     b.insert(9);
     b.insert(6);
     b.insert(4);
-    b.insert(2);
-    b.insert(9);
+    b.insert(29);
+    b.insert(52);
     b.insert(5);
     b.insert(2);
     b.print();
